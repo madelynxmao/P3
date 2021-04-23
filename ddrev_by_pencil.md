@@ -1,0 +1,5 @@
+- that is a looottt of sqlite tables, looks very detailed
+- already have template ideas, very solid
+- interesting choice of apis to use but looks like a fun finsished product
+- really good maps, very indepth
+- very reasonable timeline
