@@ -50,7 +50,7 @@ def authenticate():
     c.execute('SELECT * FROM users WHERE username=? AND password = ?', (username,password))
     data = c.fetchall()
 
-    if data: #YES THIS WORKS WOOOOOOOOOOO
+    if data: 
             session['username'] = username
             session['password'] = password
             c.execute('SELECT ID FROM users WHERE username=? AND password = ?', (username,password))
@@ -67,7 +67,6 @@ def authenticate():
         else:
             return render_template('error.html',status=False,error="Incorrect Username/Password.")
 
-# (A) done
 # sign up for an account, signup.html takes username, password, bio 
 # check if username is unique, add password specifications if desired
 
