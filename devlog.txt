@@ -1,2 +1,5 @@
 madelynM, andrewJ, benjaminG -- 2021-4-22 10:30
 	- completed and uploaded design.pdf
+
+madelynM -- 2021-4-25 12:48
+	- added basic flask + login
