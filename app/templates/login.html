@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  {% extends "base.html" %}
+  {% block title %} Login {% endblock %}
+  {% block body %}
+    <h1>
+    Fish Media
+    </h1>
+    <h2>
+    Roster: Madelyn Mao, Andrew Jiang, Benjamin Gallai
+    </h2>
+    <h3>
+    Enter your username and password below to proceed.
+    </h3>
+        <form action="/auth">
+          Username <input type="text" name="username">
+          <br></br>
+          Password <input type = "password" name = "password">
+          <br></br>
+          <input type="submit" name="sub1" value="Log In">
+        </form>
+        <br>
+
+      <h3>
+        No account? Sign up below!
+      </h3>
+      <a id="createacct" href = "/newuser">Create Account</a>
+  {% endblock %}
+
+</html>

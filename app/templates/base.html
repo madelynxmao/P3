@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <div class="navbar">
+    {% if not (status) %}
+      <a id="home" href="/">Home</a>
+      <a href="/newuser">Sign Up</a>
+    {% else %}
+      <a id="home" href="/">Home</a>
+        <div class="dropdown">
+          <div class="dropdown-content">
+            <a href="/logout">Logout</a>
+          </div>
+        </div>
+    {% endif %}
+
+  </div>
+
+  <body>
+    {% block body %}{% endblock %}
+  </body>

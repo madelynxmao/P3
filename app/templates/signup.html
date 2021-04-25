@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  {% extends "base.html" %}
+  {% block title %} Sign Up {% endblock %}
+  {% block body %}
+    <h1>
+    Welcome to Fish Media's sign up page!
+    </h1>
+    <h2>
+    Roster: Madelyn Mao, Andrew Jiang, Benjamin Gallai
+    </h2>
+    <h3>
+    No account? Sign up below!
+    </h3>
+    <form action="/signup">
+      Pick Username <input type="text" name="newusername">
+      <br></br>
+      Pick Password <input type = "password" name = "newpassword">
+      <br></br>
+      Write Short Bio <input type = "text" name = "bio">
+      <br></br>
+      <input type="submit" name="sub" value = "Sign Up!">
+    </form>
+    {% endblock %}
+</html>
