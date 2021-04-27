@@ -9,6 +9,7 @@ from flask import request, redirect           #facilitate form submission
 from datetime import datetime
 import os
 import sqlite3   #enable control of an sqlite database
+import json
 
 DB_FILE="discobandit.db"
 db = sqlite3.connect(DB_FILE, check_same_thread = False) #open if file exists, otherwise create
@@ -20,6 +21,10 @@ c.execute('CREATE TABLE IF NOT EXISTS posts(ID INTEGER NOT NULL PRIMARY KEY, Use
 db.commit()
 app = Flask(__name__)    #create Flask object
 app.secret_key = os.urandom(24)
+
+key0 = open("P3/app/keys/key_api0.txt", "r").read() # NYT
+key1 = open("P3/app/keys/key_api1.txt", "r").read() # Twitter
+key2 = open("P3/app/keys/key_api2.txt", "r").read() # Spotify
 
 @app.route("/") #, methods=['GET', 'POST'])
 def disp_loginpage():
@@ -91,7 +96,7 @@ def signup():
 def newuser():
         return render_template('signup.html',status=False)
 
-    
+
 if __name__ == "__main__": #false if this file imported as module
     #enable debugging, auto-restarting of server when this file is modified
     app.debug = True 
