@@ -1,11 +1,11 @@
 # Combining Fishes by Fish
 ## Roster & Roles:
 * Madelyn Mao (Project Manager): 
-  * 
-* Andrew Jiang (): 
-  * 
-* Benjamin Gallai (): 
-  * 
+  * frontend
+* Andrew Jiang : 
+  * API
+* Benjamin Gallai : 
+  * database
  
 ## Description:
 Our website combines multiple social media platforms to bring ultimate productivity.
