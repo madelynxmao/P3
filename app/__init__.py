@@ -13,7 +13,6 @@ import json
 import requests
 
 
-
 DB_FILE="discobandit.db"
 db = sqlite3.connect(DB_FILE, check_same_thread = False) #open if file exists, otherwise create
 c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
@@ -25,13 +24,25 @@ db.commit()
 app = Flask(__name__)    #create Flask object
 app.secret_key = os.urandom(24)
 
-key0 = open("keys/key_api0.txt", "r").read() # NYT
-key1 = open("keys/key_api1.txt", "r").read() # Twitter
-key2 = open("keys/key_api2.txt", "r").read() # Spotify
+#key0 = open("keys/key_api0.txt", "r").read() # NYT
+with open("keys/key_api1.txt", "r") as twitter_keys:
+	twapi_key = twitter_keys.readline()[:-1]
+	twapi_secret_key = twitter_keys.readline()[:-1]
+	twbearer_token = twitter_keys.readline()[:-1]
+	twaccess_token = twitter_keys.readline()[:-1]
+	twaccess_secret_token = twitter_keys.readline()[:-1] # Twitter
+#key2 = open("keys/key_api2.txt", "r").read() # Spotify
+
+#tweepy authentication stuff
+auth = tweepy.OAuthHandler(twapi_key, twapi_secret_key)
+auth.set_access_token(twaccess_token, twaccess_secret_token)
+api = tweepy.API(auth)
 
 @app.route("/") #, methods=['GET', 'POST'])
 def disp_loginpage():
     if 'username' in session:
+
+        #spotify section
         genre = "acoustic"
         response = requests.get(f'https://api.spotify.com/v1/recommendations?seed_genres={genre}'
         ,params={"limit": 1}
@@ -47,8 +58,16 @@ def disp_loginpage():
         spotify_album_art = json_response["tracks"][0]["album"]["images"][0]["url"] #album 
 
         print(json_response["tracks"][0]["album"]["artists"][0]["name"]) # artist
+
+        #twitter section
+
+        print(get_tweets())
+        print("testing")
+
+
         return render_template('response.html', user = session['username'],
         spotify_artist = spotify_artist, spotify_song_name = spotify_song_name, spotify_preview = spotify_preview, spotify_album_art = spotify_album_art, 
+        get_tweets = get_tweets(),
         status = True)
 
     else:
@@ -92,6 +111,14 @@ def authenticate():
             return render_template('error.html',status=False,error="User isn't registered. Please create an account.")
         else:
             return render_template('error.html',status=False,error="Incorrect Username/Password.")
+
+def get_tweets():
+	trends = api.trends_place(1)
+	trend_limit = 10
+	trend_links = []
+	for topic in trends[0]['trends'][:10]:
+		trend_links += [topic['url']]
+	return trend_links
 
 # sign up for an account, signup.html takes username, password, bio 
 # check if username is unique, add password specifications if desired
