@@ -25,9 +25,9 @@ db.commit()
 app = Flask(__name__)    #create Flask object
 app.secret_key = os.urandom(24)
 
-key0 = open("P3/app/keys/key_api0.txt", "r").read() # NYT
-key1 = open("P3/app/keys/key_api1.txt", "r").read() # Twitter
-key2 = open("P3/app/keys/key_api2.txt", "r").read() # Spotify
+key0 = open("keys/key_api0.txt", "r").read() # NYT
+key1 = open("keys/key_api1.txt", "r").read() # Twitter
+key2 = open("keys/key_api2.txt", "r").read() # Spotify
 
 @app.route("/") #, methods=['GET', 'POST'])
 def disp_loginpage():
@@ -35,20 +35,22 @@ def disp_loginpage():
         genre = "acoustic"
         response = requests.get(f'https://api.spotify.com/v1/recommendations?seed_genres={genre}'
         ,params={"limit": 1}
-        ,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer BQAMi1m-uDPAM8FGBA3yC9BvGiPn71ERBDnKJzSVdlZNIaIEnuwFEm84Cj3henOEL_5Q_fNZ0phg_sNMNxKI_lyTIbHnrcIC_aMBmxWEpQtV6WIon2PMrQdbXzo5r8lJlI9lgSPtj1SuYbzK3Z-PTAS-YzFvYA1Z"}
+        ,headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer BQCTdfhcm3YcVK9RZ34xcfo2oV95j4FRjoSyO7FPNXz7Y6IJb9-QmxW26YReGOSOazsyx-KAKe7hcMWltPkLVJCMzjiwoVF4VBjo5k2590nVF204SnPAL_ySTuD7eVuUove7S9K8q9F_dW_EnJCHbpmS6pUfz98S"}
         )
 
         json_response = response.json()
+        print(json_response)
 
         spotify_artist = json_response["tracks"][0]["album"]["artists"][0]["name"] # artist
         spotify_song_name = json_response["tracks"][0]["name"] #prints name of song
         spotify_preview = json_response["tracks"][0]["preview_url"] #link to preview of the song
         spotify_album_art = json_response["tracks"][0]["album"]["images"][0]["url"] #album 
 
+        print(json_response["tracks"][0]["album"]["artists"][0]["name"]) # artist
         return render_template('response.html', user = session['username'],
         spotify_artist = spotify_artist, spotify_song_name = spotify_song_name, spotify_preview = spotify_preview, spotify_album_art = spotify_album_art, 
         status = True)
-        
+
     else:
         return render_template('login.html',status=False)
 
