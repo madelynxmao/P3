@@ -1,8 +1,11 @@
-madelynM, andrewJ, benjaminG -- 2021-4-22 10:30
+madelynM, andrewJ, benjaminG -- 2021-4-22 10:30PM
 	- completed and uploaded design.pdf
 
-madelynM -- 2021-4-25 12:48
+madelynM -- 2021-4-25 12:48PM
 	- added basic flask + login
 
-madelynM, andrewJ, benjaminG -- 2021-4-26 9:30
+madelynM, andrewJ, benjaminG -- 2021-4-26 9:30PM
 	- updated design doc with new timeline, information on login, more details on API calls
+
+madelynM, andrewJ, benjaminG -- 2021-4-29 1:30AM
+	- implemented NYT, Spotify, and Twitter APIS
