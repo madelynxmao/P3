@@ -2,10 +2,11 @@
 ## Roster & Roles:
 * Madelyn Mao (Project Manager): 
   * frontend
-* Andrew Jiang : 
-  * API
-* Benjamin Gallai : 
   * database
+* Andrew Jiang : 
+  * spotify API
+* Benjamin Gallai : 
+  * NYT, twitter API
  
 ## Description:
 Our website combines multiple social media platforms to bring ultimate productivity.
