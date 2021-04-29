@@ -13,7 +13,6 @@ import json
 import tweepy #twitter API for python
 import requests
 import random
-import base64
 
 DB_FILE="discobandit.db"
 db = sqlite3.connect(DB_FILE, check_same_thread = False) #open if file exists, otherwise create
@@ -34,20 +33,12 @@ with open("keys/key_api1.txt", "r") as twitter_keys:
 	twbearer_token = twitter_keys.readline()[:-1]
 	twaccess_token = twitter_keys.readline()[:-1]
 	twaccess_secret_token = twitter_keys.readline()[:-1] # Twitter
-with open("keys/key_api2.txt", "r") as spotify_keys:
-    client_id = spotify_keys.readline()[:-1]
-    client_secret = spotify_keys.readline()[:-1]
+#key2 = open("keys/key_api2.txt", "r").read() # Spotify
 
 #tweepy authentication stuff
 auth = tweepy.OAuthHandler(twapi_key, twapi_secret_key)
 auth.set_access_token(twaccess_token, twaccess_secret_token)
 api = tweepy.API(auth)
-
-#spotify access token generator stuff
-encode_data = base64.b64encode(bytes(f"{client_id}:{client_secret}", "ISO-8859-1")).decode("ascii")
-token = requests.post("https://accounts.spotify.com/api/token",headers = {"Authorization": f"Basic {encode_data}"},data = {"grant_type":"client_credentials"})
-token_json = token.json()
-access_token = token_json["access_token"]   
 
 @app.route("/") #, methods=['GET', 'POST'])
 def disp_loginpage():
@@ -84,22 +75,8 @@ def authenticate():
             c.execute('SELECT ID FROM users WHERE username=? AND password = ?', (username,password))
             userid = c.fetchone()
             session['UserID'] = int(userid[0])
-            
-            #spotify section
-            genre = "acoustic"
-            response = requests.get(f'https://api.spotify.com/v1/recommendations?seed_genres={genre}',params={"limit": 1},headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {access_token}"})
-
-            json_response = response.json()
-            #print(json_response)
-
-            spotify_artist = json_response["tracks"][0]["album"]["artists"][0]["name"] # artist
-            spotify_song_name = json_response["tracks"][0]["name"] #prints name of song
-            spotify_preview = json_response["tracks"][0]["preview_url"] #link to preview of the song
-            spotify_album_art = json_response["tracks"][0]["album"]["images"][1]["url"] #album 
-
-            #print(json_response["tracks"][0]["album"]["artists"][0]["name"]) # artist
-            
-            return render_template('response.html', user = request.args['username'], tweet_trends = get_tweets(), article = get_article(), spotify_artist = spotify_artist, spotify_song_name = spotify_song_name, spotify_preview = spotify_preview, spotify_album_art = spotify_album_art, status=True)
+            #print(userid) #diagnostic
+            return render_template('response.html', user = request.args['username'], tweet_trends = get_tweets(), article = get_article(), status=True)
 
     else:
         c.execute('SELECT * FROM users WHERE username=?', (username,))
@@ -117,7 +94,7 @@ def get_tweets():
 		trend_links += [topic['url']]
 	return trend_links
 
-def get_article():
+def get_articles():
 	top_articles = requests.get('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=' + nytapi_key).json()['results']
 	your_article_index = random.randint(0,len(top_articles) - 1)
 	your_article = top_articles[your_article_index]

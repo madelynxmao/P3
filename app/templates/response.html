@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
-  {% extends "base.html" %}
 
-  {% block body %}
+
    <h1> Welcome {{user}} to Fish Media! </h1>
-   <h2> Check out the options on the top right. </h2>
+
    <br></br>
-  {% endblock %}
+
+  <!-- show spotify songs, nyt, tweets -->
+
+<body>
+
+  <p>song</p>
+
+  <p>song from spotify: {{spotify_song_name}} by {{spotify_artist}}</p>
+  <a href="{{spotify_preview}}">link to preview</a>
+  <br>
+  <img src="{{spotify_album_art}}"/>
+
+  <br>
+  <p>tweet</p>
+
+  <a href="{{tweet_trends[0]}}">link to tweet</a>
+
+  <p>Article</p>
+  <p>{{article[0]}} {{article[3]}}</p>
+  <br>
+  <p>{{article[1]}}</p>
+  <a href="{{article[2]}}">link to article</a>
+
+
+</body>
+
 
 </html>
-
